@@ -1,3 +1,4 @@
-export const enviroment = {
-  //Datos de firestore
+export const enviroment =
+{
+  //environmen data
 }

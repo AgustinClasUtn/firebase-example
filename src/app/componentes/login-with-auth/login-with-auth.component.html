@@ -1,0 +1,19 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center text-primary">Ingresar usuario</h1>
+            <input [(ngModel)]="userMail" class="form-control my-2">
+            <input [(ngModel)]="userPWD" class="form-control my-2">
+            <div class="d-grid gap-2">
+                @if (auth.currentUser?.email){
+                    <button (click)="CloseSession()" class="btn btn-primary">Cerrar sesión</button>
+                } @else{
+                    <button (click)="Login()" class="btn btn-primary">Login</button>
+                }
+            </div>
+            @if (auth.currentUser?.email){
+                <h2 class="text-center text-primary">Usuario logueado: {{auth.currentUser?.email}}</h2>
+            }
+        </div>
+    </div>
+</div>

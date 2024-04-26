@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { addDoc, collection, collectionData, DocumentData, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 
 @Component({
@@ -17,13 +17,14 @@ export class LoginComponent {
     public loginsCollection:any[] = [];
     public user:string = "";
     public countLogins:number = 0;
+    private sub!:Subscription;
 
-    public miObservable:BehaviorSubject<string> = new BehaviorSubject<string>("");
+    //public miObservable:BehaviorSubject<string> = new BehaviorSubject<string>("");
 
     constructor(private firestore: Firestore){
-      this.miObservable.subscribe((res) => {
+      /*this.miObservable.subscribe((res) => {
         console.log("Se ha logueado el usuario: " + res);
-      })
+      }) */
     }
 
     Login() {
@@ -31,7 +32,7 @@ export class LoginComponent {
       addDoc(col, { fecha: new Date(), "user": this.user})
 
       //Actualizamos el valor de la variable
-      this.miObservable.next(this.user);
+      //this.miObservable.next(this.user);
     }
   
     GetData(){
@@ -39,9 +40,9 @@ export class LoginComponent {
       
       const observable = collectionData(col);
   
-      observable.subscribe((respuesta) => {
+      this.sub = observable.subscribe((respuesta:any) => {
 
-        //Actualizamos nuestra colección
+        //Actualizamos nuestro array
         this.loginsCollection = respuesta;
 
         //Actualizamos la cantidad de registros que contiene la colección (Ejemplo propuesto en clase)
@@ -51,6 +52,11 @@ export class LoginComponent {
       })
 
     }
+
+    //OnDestroy {
+    //  this.sub.unsuscribe();
+    //}
+
 }
 
     
